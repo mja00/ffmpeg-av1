@@ -7,6 +7,8 @@ set -e
 . tools/common.sh
 
 OUT_DIR="$PWD/out"
+DAV1D_PREFIX="$PWD/dav1d-prefix"
+export PKG_CONFIG_PATH="$DAV1D_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 cd "$DIRECTORY"
 
@@ -126,9 +128,13 @@ flags() {
 	off avdevice avformat doc everything ffmpeg ffprobe network
 	on static filter=yadif,scale small pic swresample
 
-	for codec in h264 vp8 vp9 opus; do
+	for codec in h264 vp8 vp9 opus libdav1d; do
 		on decoder="$codec"
 	done
+
+	# AV1 movies (Switch 2 titles) need dav1d; it is static and merged into libavcodec.a when packaging.
+	on libdav1d
+	echo "--pkg-config-flags=--static"
 
 	echo "--prefix=$OUT_DIR"
 

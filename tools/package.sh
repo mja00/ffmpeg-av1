@@ -14,6 +14,9 @@ copy_build_artifacts() {
 	make install -C "$DIRECTORY"
 	rm -rf out/share out/lib/pkgconfig
 
+	# Consumers link only the FFmpeg libs; ar -M keeps dav1d's duplicate per-bitdepth member names.
+	printf 'open out/lib/libavcodec.a\naddlib dav1d-prefix/lib/libdav1d.a\nsave\nend\n' | ar -M
+
 	_end
 }
 

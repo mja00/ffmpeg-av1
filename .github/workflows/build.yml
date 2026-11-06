@@ -90,7 +90,7 @@ jobs:
             git make unzip pkgconf diffutils curl tar patch
           pacboy: >-
             toolchain:p vulkan-devel:p pkg-config:p
-            nasm:p ffnvcodec-headers:p
+            nasm:p ffnvcodec-headers:p meson:p ninja:p
 
       - name: Install dependencies (MSVC)
         uses: crueter-ci/install-tools@master
@@ -148,6 +148,9 @@ jobs:
 
       - name: Extract
         run: tar xf ${{ env.ARTIFACT}}
+
+      - name: Build dav1d
+        run: bash ./tools/dav1d.sh
 
       # configure
       - name: Configure

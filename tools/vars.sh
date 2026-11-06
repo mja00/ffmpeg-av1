@@ -23,4 +23,5 @@ fi
 export TIMESTAMP
 
 SHORTSHA=$(echo "$COMMIT" | cut -c1-10)
-export VERSION="$TAG-$TIMESTAMP-$SHORTSHA"
+# A fixed version so the Lichii cpmfile entry and the release tag stay stable across rebuilds.
+export VERSION="$TAG-av1-1"
